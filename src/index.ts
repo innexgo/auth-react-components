@@ -1,5 +1,6 @@
 import AuthenticatedComponentRenderer from './components/AuthenticatedComponentRenderer';
 import AuthenticatedComponentProps from './components/AuthenticatedComponentProps';
+import LoginForm from './components/LoginForm';
 import ManagePassword from './components/ManagePassword';
 import ManageUserData from './components/ManageUserData';
 import InnerLayout from './components/InnerLayout';
@@ -13,6 +14,7 @@ import ForgotPassword from './pages/ForgotPassword';
 
 export { AuthenticatedComponentRenderer };
 export type { AuthenticatedComponentProps };
+export { LoginForm };
 export { ManagePassword };
 export { ManageUserData };
 export { InnerLayout };
