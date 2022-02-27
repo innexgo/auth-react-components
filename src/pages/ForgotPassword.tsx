@@ -93,7 +93,7 @@ function ForgotPassword(props: BrandedComponentProps) {
   const [successful, setSuccess] = React.useState(false);
   return <SimpleLayout branding={props.branding}>
     <div className="h-100 w-100 d-flex">
-      <Card className="mx-auto my-auto">
+      <Card className="mx-auto my-auto col-md-6">
         <Card.Body>
           <Card.Title>Send Reset Password Email</Card.Title>
           {successful

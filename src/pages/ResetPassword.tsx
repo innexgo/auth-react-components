@@ -137,11 +137,11 @@ function ResetPassword(props: BrandedComponentProps) {
   const [successful, setSuccess] = React.useState(false);
   return <SimpleLayout branding={props.branding}>
     <div className="h-100 w-100 d-flex">
-      <Card className="mx-auto my-auto">
+      <Card className="mx-auto my-auto col-md-6">
         <Card.Body>
           <Card.Title>Reset Password</Card.Title>
           {successful
-            ? <Form.Text className="text-success">Password changed successfully</Form.Text>
+            ? <Card.Text className="text-success">Password changed successfully</Card.Text>
             : <ResetPasswordForm resetKey={resetKey} onSuccess={() => setSuccess(true)} />
           }
         </Card.Body>

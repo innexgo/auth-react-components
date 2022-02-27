@@ -1,4 +1,10 @@
 /// <reference types="react" />
-import { BrandedComponentProps } from '@innexgo/common-react-components';
-declare function EmailConfirm(props: BrandedComponentProps): JSX.Element;
+import { ApiKey } from '@innexgo/frontend-auth-api';
+import { Branding } from '@innexgo/common-react-components';
+declare type EmailConfirmProps = {
+    branding: Branding;
+    apiKey: ApiKey | null;
+    setApiKey: (a: ApiKey | null) => void;
+};
+declare function EmailConfirm(props: EmailConfirmProps): JSX.Element;
 export default EmailConfirm;

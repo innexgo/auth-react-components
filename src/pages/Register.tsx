@@ -28,7 +28,7 @@ function Register(props: RegisterProps) {
   return (
     <SimpleLayout branding={props.branding}>
       <div className="h-100 w-100 d-flex">
-        <Card className="mx-auto my-auto">
+        <Card className="mx-auto my-auto col-md-6">
           <Card.Body>
             <Card.Title>Register</Card.Title>
             {createdInitialAccount(props.apiKey)

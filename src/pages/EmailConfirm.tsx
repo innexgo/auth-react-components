@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card, Button, Form } from "react-bootstrap";
 import { Formik, FormikHelpers, FormikErrors } from 'formik'
-import { Email, emailNew } from '@innexgo/frontend-auth-api';
+import { ApiKey, Email, emailNew } from '@innexgo/frontend-auth-api';
 import { isErr } from '@innexgo/frontend-common';
-import { SimpleLayout, BrandedComponentProps } from '@innexgo/common-react-components';
+import { SimpleLayout, Branding } from '@innexgo/common-react-components';
 
 type CreateEmailProps = {
   verificationChallengeKey: string;
@@ -28,6 +28,7 @@ function CreateEmail(props: CreateEmailProps) {
 
     const maybeEmail = await emailNew({
       verificationChallengeKey: props.verificationChallengeKey,
+      toParent: false
     });
 
     if (isErr(maybeEmail)) {
@@ -113,26 +114,41 @@ function CreateEmail(props: CreateEmailProps) {
   </>
 }
 
+type EmailConfirmProps = {
+  branding: Branding,
+  apiKey: ApiKey | null,
+  setApiKey: (a: ApiKey | null) => void
+}
 
-function EmailConfirm(props: BrandedComponentProps) {
+
+function EmailConfirm(props: EmailConfirmProps) {
 
   const [email, setEmail] = React.useState<Email | null>(null);
 
   return (
     <SimpleLayout branding={props.branding}>
       <div className="h-100 w-100 d-flex">
-        <Card className="mx-auto my-auto">
+        <Card className="mx-auto my-auto col-md-6">
           <Card.Body>
-            <Card.Title>Change Email</Card.Title>
+            <Card.Title>Confirm Email</Card.Title>
             {
               email !== null
-                ? <Card.Text> Your email ({email.verificationChallenge.email}), has been confirmed. Click <a href={props.branding.dashboardUrl}>here</a> to login.</Card.Text>
+                ? <Card.Text>
+                  Your email ({email.verificationChallenge.email}), has been confirmed.
+                  Click <a href={props.branding.dashboardUrl}>here</a> to login.
+                </Card.Text>
                 : <CreateEmail
                   verificationChallengeKey={
                     (new URLSearchParams(window.location.search).get("verificationChallengeKey") ?? "")
                       .replace(' ', '+')
                   }
-                  postSubmit={e => setEmail(e)}
+                  postSubmit={e => {
+                    // if email is upgraded, then you need to re-log-in
+                    if (props.apiKey?.apiKeyKind === "NO_EMAIL") {
+                      props.setApiKey(null);
+                    }
+                    setEmail(e);
+                  }}
                 />
             }
           </Card.Body>
