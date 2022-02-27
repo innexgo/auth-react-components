@@ -3,6 +3,7 @@ import AuthenticatedComponentProps from './components/AuthenticatedComponentProp
 import LoginForm from './components/LoginForm';
 import ManagePassword from './components/ManagePassword';
 import ManageUserData from './components/ManageUserData';
+import SendVerificationChallengeForm from './components/SendVerificationChallengeForm';
 import InnerLayout from './components/InnerLayout';
 
 import EmailConfirm from './pages/EmailConfirm';
@@ -15,6 +16,7 @@ import ForgotPassword from './pages/ForgotPassword';
 export { AuthenticatedComponentRenderer };
 export type { AuthenticatedComponentProps };
 export { LoginForm };
+export { SendVerificationChallengeForm };
 export { ManagePassword };
 export { ManageUserData };
 export { InnerLayout };
