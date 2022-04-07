@@ -3,11 +3,9 @@ import { Card, Button } from "react-bootstrap";
 import { ApiKey, Email } from "@innexgo/frontend-auth-api";
 import AuthenticatedComponentProps from '../components/AuthenticatedComponentProps';
 import LoginForm from '../components/LoginForm';
-import { SimpleLayout, Branding } from '@innexgo/common-react-components';
+import { Branding } from '@innexgo/common-react-components';
+import DefaultSidebarLayout from '../components/DefaultSidebarLayout';
 import SendVerificationChallengeForm from "../components/SendVerificationChallengeForm";
-
-
-
 
 export interface AuthenticatedComponentRendererProps {
   branding: Branding,
@@ -40,20 +38,20 @@ function AuthenticatedComponentRenderer({
     apiKey.apiKeyKind === "CANCEL";
 
   if (notLoggedIn) {
-    return <SimpleLayout branding={branding}>
+    return <DefaultSidebarLayout branding={branding}>
       <div className="h-100 w-100 d-flex">
         <Card className="mx-auto my-auto col-md-6">
           <Card.Body>
             <Card.Title>Login</Card.Title>
-            <LoginForm branding={branding} onSuccess={x => setApiKey(x)} />
+            <LoginForm branding={branding} onSuccess={setApiKey} />
           </Card.Body>
         </Card>
       </div>
-    </SimpleLayout>
+    </DefaultSidebarLayout>
   }
 
   if (sentEmail !== null) {
-    return <SimpleLayout branding={branding}>
+    return <DefaultSidebarLayout branding={branding}>
       <div className="h-100 w-100 d-flex">
         <Card className="mx-auto my-auto col-md-6">
           <Card.Body>
@@ -66,11 +64,11 @@ function AuthenticatedComponentRenderer({
           </Card.Body>
         </Card>
       </div>
-    </SimpleLayout>
+    </DefaultSidebarLayout>
   }
 
   if (sentParentEmail !== null) {
-    return <SimpleLayout branding={branding}>
+    return <DefaultSidebarLayout branding={branding}>
       <div className="h-100 w-100 d-flex">
         <Card className="mx-auto my-auto col-md-6">
           <Card.Body>
@@ -86,12 +84,12 @@ function AuthenticatedComponentRenderer({
           </Card.Body>
         </Card>
       </div>
-    </SimpleLayout>
+    </DefaultSidebarLayout>
   }
 
 
   if (apiKey.apiKeyKind === "NO_EMAIL") {
-    return <SimpleLayout branding={branding}>
+    return <DefaultSidebarLayout branding={branding}>
       <div className="h-100 w-100 d-flex">
         <Card className="mx-auto my-auto col-md-6">
           <Card.Body>
@@ -105,9 +103,9 @@ function AuthenticatedComponentRenderer({
           </Card.Body>
         </Card>
       </div>
-    </SimpleLayout>
+    </DefaultSidebarLayout>
   } else {
-    return <SimpleLayout branding={branding}>
+    return <DefaultSidebarLayout branding={branding}>
       <div className="h-100 w-100 d-flex">
         <Card className="mx-auto my-auto col-md-6">
           <Card.Body>
@@ -124,7 +122,7 @@ function AuthenticatedComponentRenderer({
           </Card.Body>
         </Card>
       </div>
-    </SimpleLayout >
+    </DefaultSidebarLayout >
   }
 }
 

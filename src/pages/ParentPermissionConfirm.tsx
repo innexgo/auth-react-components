@@ -4,7 +4,10 @@ import { Formik, FormikHelpers, FormikErrors } from 'formik'
 import { Email, emailNew } from '@innexgo/frontend-auth-api';
 import { isErr } from '@innexgo/frontend-common';
 
-import { SimpleLayout, BrandedComponentProps } from '@innexgo/common-react-components';
+import { BrandedComponentProps } from '@innexgo/common-react-components';
+
+import DefaultSidebarLayout from '../components/DefaultSidebarLayout';
+
 
 type CreateEmailProps = {
   verificationChallengeKey: string;
@@ -105,7 +108,7 @@ function CreateEmail(props: CreateEmailProps) {
           noValidate
           onSubmit={fprops.handleSubmit} >
           <div hidden={fprops.status.successResult !== ""}>
-          <Form.Check className="mb-3 form-check" hidden={props.tosUrl === undefined}>
+            <Form.Check className="mb-3 form-check" hidden={props.tosUrl === undefined}>
               <Form.Check.Input
                 name="terms"
                 checked={fprops.values.terms}
@@ -132,7 +135,7 @@ function ParentPermissionConfirm(props: BrandedComponentProps) {
   const [email, setEmail] = React.useState<Email | null>(null);
 
   return (
-    <SimpleLayout branding={props.branding}>
+    <DefaultSidebarLayout branding={props.branding}>
       <div className="h-100 w-100 d-flex">
         <Card className="mx-auto my-auto col-md-6">
           <Card.Body>
@@ -141,7 +144,7 @@ function ParentPermissionConfirm(props: BrandedComponentProps) {
               email !== null
                 ? <Card.Text>Thank you, your response has been noted.</Card.Text>
                 : <CreateEmail
-                tosUrl={props.branding.tosUrl}
+                  tosUrl={props.branding.tosUrl}
                   verificationChallengeKey={
                     (new URLSearchParams(window.location.search).get("verificationChallengeKey") ?? "")
                       .replace(' ', '+')
@@ -152,7 +155,7 @@ function ParentPermissionConfirm(props: BrandedComponentProps) {
           </Card.Body>
         </Card>
       </div>
-    </SimpleLayout>
+    </DefaultSidebarLayout>
   )
 }
 

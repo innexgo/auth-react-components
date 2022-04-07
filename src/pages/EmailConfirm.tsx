@@ -3,7 +3,8 @@ import { Card, Button, Form } from "react-bootstrap";
 import { Formik, FormikHelpers, FormikErrors } from 'formik'
 import { ApiKey, Email, emailNew } from '@innexgo/frontend-auth-api';
 import { isErr } from '@innexgo/frontend-common';
-import { SimpleLayout, Branding } from '@innexgo/common-react-components';
+import { Branding } from '@innexgo/common-react-components';
+import DefaultSidebarLayout from '../components/DefaultSidebarLayout';
 
 type CreateEmailProps = {
   verificationChallengeKey: string;
@@ -126,7 +127,7 @@ function EmailConfirm(props: EmailConfirmProps) {
   const [email, setEmail] = React.useState<Email | null>(null);
 
   return (
-    <SimpleLayout branding={props.branding}>
+    <DefaultSidebarLayout branding={props.branding}>
       <div className="h-100 w-100 d-flex">
         <Card className="mx-auto my-auto col-md-6">
           <Card.Body>
@@ -154,7 +155,7 @@ function EmailConfirm(props: EmailConfirmProps) {
           </Card.Body>
         </Card>
       </div>
-    </SimpleLayout>
+    </DefaultSidebarLayout>
   )
 }
 
