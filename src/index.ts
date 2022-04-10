@@ -5,6 +5,7 @@ import ManagePassword from './components/ManagePassword';
 import ManageUserData from './components/ManageUserData';
 import SendVerificationChallengeForm from './components/SendVerificationChallengeForm';
 import InnerLayout from './components/InnerLayout';
+import DefaultSidebarLayout from './components/DefaultSidebarLayout';
 
 import DefaultEmailConfirmPage from './pages/EmailConfirm';
 import DefaultParentPermissionConfirmPage from './pages/ParentPermissionConfirm';
@@ -20,6 +21,7 @@ export { SendVerificationChallengeForm };
 export { ManagePassword };
 export { ManageUserData };
 export { InnerLayout };
+export { DefaultSidebarLayout };
 
 export { DefaultEmailConfirmPage };
 export { DefaultParentPermissionConfirmPage };
