@@ -12,7 +12,9 @@ interface SidebarEntryProps {
 }
 interface InnerLayoutComposition {
     SidebarEntry: React.FunctionComponent<SidebarEntryProps>;
-    Body: React.FunctionComponent;
+    Body: React.FunctionComponent<{
+        children: React.ReactNode;
+    }>;
 }
 interface InnerLayoutProps {
     apiKey: ApiKey;

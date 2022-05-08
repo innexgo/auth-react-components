@@ -27,7 +27,7 @@ const linkStyle = {
   alignItems: "center"
 }
 
-const DefaultSidebarLayout: React.FC<BrandedComponentProps> = (props) =>
+const DefaultSidebarLayout: React.FC<BrandedComponentProps & {children: React.ReactNode}> = (props) =>
   <Container fluid>
     <Row style={{ minHeight: "100vh" }}>
       <Col xl="2" className="px-5 py-5" style={{ backgroundColor: '#1C2B2D' }}>

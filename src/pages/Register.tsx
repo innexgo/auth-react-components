@@ -32,16 +32,18 @@ function Register(props: RegisterProps) {
       <div className="h-100 w-100 d-flex">
         <Card className="mx-auto my-auto col-md-6">
           <Card.Body>
-            <Card.Title>Register</Card.Title>
-            {createdInitialAccount(props.apiKey)
-              // if authenticated go to home
-              ? navigate(props.branding.dashboardUrl)
-              // if not authenticated yet, then display this
-              : <RegisterForm
-                onSuccess={apiKey => props.setApiKey(apiKey)}
-                tosUrl={props.branding.tosUrl}
-              />
-            }
+            <>
+              <Card.Title>Register</Card.Title>
+              {createdInitialAccount(props.apiKey)
+                // if authenticated go to home
+                ? navigate(props.branding.dashboardUrl)
+                // if not authenticated yet, then display this
+                : <RegisterForm
+                  onSuccess={apiKey => props.setApiKey(apiKey)}
+                  tosUrl={props.branding.tosUrl}
+                />
+              }
+            </>
           </Card.Body>
         </Card>
       </div>
