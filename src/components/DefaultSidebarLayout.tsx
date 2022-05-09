@@ -27,11 +27,24 @@ const linkStyle = {
   alignItems: "center"
 }
 
-const DefaultSidebarLayout: React.FC<BrandedComponentProps & {children: React.ReactNode}> = (props) =>
+const DefaultSidebarLayout: React.FC<BrandedComponentProps & { children: React.ReactNode }> = (props) =>
   <Container fluid>
     <Row style={{ minHeight: "100vh" }}>
       <Col xl="2" className="px-5 py-5" style={{ backgroundColor: '#1C2B2D' }}>
-        <a href={props.branding.homeUrl}><img src={props.branding.darkAdaptedIcon} alt={`${props.branding.name} Icon`} /></a>
+        <a href={props.branding.homeUrl}>
+          <img
+            src={props.branding.darkAdaptedIcon}
+            alt={`${props.branding.name} Icon`}
+            className="mb-3"
+            style={{
+              display: "block",
+              maxWidth: "100px",
+              maxHeight: "50px",
+              width: "auto",
+              height: "auto",
+            }}
+          />
+        </a>
         <h4 style={gradText} >{props.branding.name}</h4>
         <a href={props.branding.homeUrl} style={linkStyle}>
           <House style={iconStyle} /> Home
