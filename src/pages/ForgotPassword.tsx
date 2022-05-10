@@ -26,7 +26,7 @@ function ForgotPasswordForm(props: ForgotPasswordFormProps) {
 
     // Now send request
     const maybePasswordResetKey = await passwordResetNew({
-      userEmail: values.email
+      email: values.email
     });
 
     if (isErr(maybePasswordResetKey)) {

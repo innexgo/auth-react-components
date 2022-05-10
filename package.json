@@ -1,6 +1,6 @@
 {
   "name": "@innexgo/auth-react-components",
-  "version": "0.1.34",
+  "version": "0.1.35",
   "description": " UI templates for login, logout, forgot password, and authenticated vs nonauthenticated pages.",
   "main": "lib/index.js",
   "files": [
@@ -22,7 +22,7 @@
   "homepage": "https://github.com/innexgo/frontend-auth#readme",
   "peerDependencies": {
     "@innexgo/common-react-components": "^0.1.15",
-    "@innexgo/frontend-auth-api": "^0.2.40",
+    "@innexgo/frontend-auth-api": "^0.2.41",
     "@innexgo/frontend-common": "^0.0.14",
     "@popperjs/core": "^2.11.5",
     "@types/react-dom": "^18.0.3",
