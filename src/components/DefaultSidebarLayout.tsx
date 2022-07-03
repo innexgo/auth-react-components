@@ -7,6 +7,7 @@ const gradText = {
   background: "linear-gradient(#B7C9D6, #E6D5B8)",
   color: "transparent",
   backgroundClip: "text",
+  webkitBackgroundClip: "text",
   fontWeight: "bold" as "bold",
   marginBottom: "50px"
 }
