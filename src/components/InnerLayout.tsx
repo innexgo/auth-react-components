@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Loader } from '@innexgo/common-react-components';
 import { ApiKey, UserData, userDataView } from '@innexgo/frontend-auth-api';
 import { unwrap } from '@innexgo/frontend-common';
 import { Async, AsyncProps } from 'react-async';
 import { Icon, BoxArrowLeft as ExitAppIcon, List as MenuIcon } from 'react-bootstrap-icons';
 import Modal from 'react-bootstrap/Modal'
+import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button';
 
 export interface Preferences {
@@ -159,7 +159,12 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
           <span className="nav-item nav-link link-light mx-auto my-3">
             <Async promiseFn={loadUserData} apiKey={props.apiKey}>
               <Async.Pending>
-                {preferences.collapsed ? false : <Loader />}
+                {preferences.collapsed
+                  ? false
+                  : <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                }
               </Async.Pending>
               <Async.Rejected>
                 <span className="text-danger">Couldn't load User</span>
