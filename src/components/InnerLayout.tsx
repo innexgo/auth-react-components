@@ -109,7 +109,7 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
     const widthrem = preferences.collapsed ? 4 : 15;
 
     const sidebarStyle = {
-      height: "100%",
+      height: "100vh",
       width: `${widthrem}rem`,
       position: "fixed" as const,
       top: 0,
@@ -117,13 +117,6 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
       overflowX: "hidden" as const,
       overflowY: "hidden" as const,
       margin: "0%"
-    };
-
-    const sidebarBottom = {
-      position: 'absolute' as const,
-      bottom: 0,
-      right: 0,
-      left: 0,
     };
 
     let sidebarChildren: React.ReactElement[] = [];
@@ -147,7 +140,7 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
 
     return (
       <InnerLayoutContext.Provider value={preferences}>
-        <nav className="bg-dark text-light" style={sidebarStyle}>
+        <nav className="bg-dark text-light ps-3 pt-3 d-flex flex-column" style={sidebarStyle}>
           <div className="nav-item nav-link link-light">
             <MenuIcon style={iconStyle}
               onClick={_ => setPreferences({
@@ -156,7 +149,7 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
               })}
             />
           </div>
-          <span className="nav-item nav-link link-light mx-auto my-3">
+          <div className="nav-item nav-link link-light my-3">
             <Async promiseFn={loadUserData} apiKey={props.apiKey}>
               <Async.Pending>
                 {preferences.collapsed
@@ -176,18 +169,16 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
               }
               </Async.Fulfilled>
             </Async>
-          </span>
-          {sidebarChildren}
-          <div style={sidebarBottom}>
-            <button
-              type="button"
-              className="btn nav-item nav-link link-light"
-              onClick={handleShow}
-            >
-              <ExitAppIcon style={iconStyle} className="me-2" />
-              {preferences.collapsed ? false : "Log Out"}
-            </button>
           </div>
+          {sidebarChildren}
+          <button
+            type="button"
+            className="btn nav-item nav-link link-light mt-auto"
+            onClick={handleShow}
+          >
+            <ExitAppIcon style={iconStyle} className="me-2" />
+            {preferences.collapsed ? false : "Log Out"}
+          </button>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Log Out</Modal.Title>
