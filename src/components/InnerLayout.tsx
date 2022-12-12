@@ -62,12 +62,12 @@ const SidebarEntry: React.FunctionComponent<SidebarEntryProps> = props => {
   const Icon = props.icon;
   if (React.useContext(InnerLayoutContext).collapsed) {
     // collapsed
-    return <a style={style} className="nav-item nav-link" href={props.href}>
+    return <a style={style} className="nav-item nav-link mb-2" href={props.href}>
       <Icon style={iconStyle} />
     </a>
   } else {
     // not collapsed
-    return <a style={style} className="nav-item nav-link" href={props.href}>
+    return <a style={style} className="nav-item nav-link mb-2" href={props.href}>
       <Icon style={iconStyle} className="me-2" />{props.label}
     </a>
   }
@@ -106,7 +106,7 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
       setPreferencesState(data);
     };
 
-    const widthrem = preferences.collapsed ? 4 : 15;
+    const widthrem = preferences.collapsed ? 4.25 : 15;
 
     const sidebarStyle = {
       height: "100vh",
@@ -173,7 +173,7 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
           {sidebarChildren}
           <button
             type="button"
-            className="btn nav-item nav-link link-light mt-auto text-start"
+            className="btn nav-item nav-link link-light mt-auto text-start mb-2"
             onClick={handleShow}
           >
             <ExitAppIcon style={iconStyle} className="me-2" />
