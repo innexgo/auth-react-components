@@ -1,6 +1,6 @@
 {
   "name": "@innexgo/auth-react-components",
-  "version": "0.1.44",
+  "version": "0.1.45",
   "description": "UI templates for authenticated views",
   "main": "lib/index.js",
   "files": [
