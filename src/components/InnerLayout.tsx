@@ -173,7 +173,7 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
           {sidebarChildren}
           <button
             type="button"
-            className="btn nav-item nav-link link-light mt-auto"
+            className="btn nav-item nav-link link-light mt-auto text-start"
             onClick={handleShow}
           >
             <ExitAppIcon style={iconStyle} className="me-2" />
