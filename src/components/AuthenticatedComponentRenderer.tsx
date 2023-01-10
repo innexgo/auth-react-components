@@ -2,127 +2,52 @@ import React from "react";
 import { Card, Button } from "react-bootstrap";
 import { ApiKey, Email } from "@innexgo/frontend-auth-api";
 import AuthenticatedComponentProps from '../components/AuthenticatedComponentProps';
-import LoginForm from '../components/LoginForm';
 import { Branding } from '@innexgo/common-react-components';
-import DefaultSidebarLayout from '../components/DefaultSidebarLayout';
-import SendVerificationChallengeForm from "../components/SendVerificationChallengeForm";
+import { useNavigate } from "react-router-dom";
 
 export interface AuthenticatedComponentRendererProps {
   branding: Branding,
+  authServerUrl: string,
   component: React.ComponentType<AuthenticatedComponentProps>
   apiKey: ApiKey | null,
   setApiKey: (data: ApiKey | null) => void
 }
 
+
 function AuthenticatedComponentRenderer({
   branding,
   component: AuthenticatedComponent,
   apiKey,
+  authServerUrl,
   setApiKey,
-
 }: AuthenticatedComponentRendererProps) {
-  // the email we sent to
-  const [sentEmail, setSentEmail] = React.useState<string | null>(null);
-  const [sentParentEmail, setSentParentEmail] = React.useState<string | null>(null);
-
+  const navigate = useNavigate();
   const isAuthenticated = apiKey !== null &&
     apiKey.creationTime + apiKey.duration > Date.now() &&
     apiKey.apiKeyKind === "VALID";
 
   if (isAuthenticated) {
-    return <AuthenticatedComponent apiKey={apiKey!} setApiKey={setApiKey} branding={branding} />
+    return <AuthenticatedComponent apiKey={apiKey!} setApiKey={setApiKey} authServerUrl={authServerUrl} branding={branding} />
   }
 
-  const notLoggedIn = apiKey === null ||
-    apiKey.creationTime + apiKey.duration <= Date.now() ||
-    apiKey.apiKeyKind === "CANCEL";
+  // get params (if this is a return, then we can just parse)
+  const params = new URLSearchParams(window.location.search);
 
-  if (notLoggedIn) {
-    return <DefaultSidebarLayout branding={branding}>
-      <div className="h-100 w-100 d-flex">
-        <Card className="mx-auto my-auto col-md-6">
-          <Card.Body>
-            <Card.Title>Login</Card.Title>
-            <LoginForm branding={branding} onSuccess={setApiKey} />
-          </Card.Body>
-        </Card>
-      </div>
-    </DefaultSidebarLayout>
-  }
+  // if not authenticated then we need to check if we have a query string containing the api key.
+  const apiKeyJson = params.get('apiKey');
 
-  if (sentEmail !== null) {
-    return <DefaultSidebarLayout branding={branding}>
-      <div className="h-100 w-100 d-flex">
-        <Card className="mx-auto my-auto col-md-6">
-          <Card.Body>
-            <Card.Title>Verfication Email Sent!</Card.Title>
-            <Card.Text>
-              We successfully sent an email to {sentEmail}.
-              You should use the link provided in the email to finish setting up your account.
-              If you don't see our email, reload this page and try again.
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </div>
-    </DefaultSidebarLayout>
-  }
-
-  if (sentParentEmail !== null) {
-    return <DefaultSidebarLayout branding={branding}>
-      <div className="h-100 w-100 d-flex">
-        <Card className="mx-auto my-auto col-md-6">
-          <Card.Body>
-            <Card.Title>Parent Verfication Email Sent!</Card.Title>
-            <Card.Text>
-              We successfully sent an email to {sentParentEmail}.
-            </Card.Text>
-            <Card.Text>
-              If your parents don't see our email, reload this page and try again.
-              Once your parent approves your account, you should be able to log in normally.
-            </Card.Text>
-            <Button onClick={() => setApiKey(null)}>Log In</Button>
-          </Card.Body>
-        </Card>
-      </div>
-    </DefaultSidebarLayout>
-  }
-
-
-  if (apiKey.apiKeyKind === "NO_EMAIL") {
-    return <DefaultSidebarLayout branding={branding}>
-      <div className="h-100 w-100 d-flex">
-        <Card className="mx-auto my-auto col-md-6">
-          <Card.Body>
-            <Card.Title>Verify Your Email</Card.Title>
-            <SendVerificationChallengeForm
-              toParent={false}
-              initialEmailAddress=""
-              setVerificationChallenge={x => setSentEmail(x.email)}
-              apiKey={apiKey}
-            />
-          </Card.Body>
-        </Card>
-      </div>
-    </DefaultSidebarLayout>
+  if (apiKeyJson === null) {
+    // if null we need to redirect to the auth site to login
+    let url = new URL('/login', authServerUrl);
+    url.searchParams.append('src', window.location.href);
+    window.location.replace(url);
   } else {
-    return <DefaultSidebarLayout branding={branding}>
-      <div className="h-100 w-100 d-flex">
-        <Card className="mx-auto my-auto col-md-6">
-          <Card.Body>
-            <Card.Title>Verify Parent Email</Card.Title>
-            <Card.Text>
-              Because you indicated you are under 13, we need parent permission to finish setting up your account.
-            </Card.Text>
-            <SendVerificationChallengeForm
-              toParent={true}
-              initialEmailAddress=""
-              setVerificationChallenge={x => setSentParentEmail(x.email)}
-              apiKey={apiKey}
-            />
-          </Card.Body>
-        </Card>
-      </div>
-    </DefaultSidebarLayout >
+    // if not null then we set api key and navigate to target
+    setApiKey(JSON.parse(apiKeyJson));
+    const url = new URL(window.location.pathname, window.location.origin);
+    url.hash = params.get("hash") ?? "";
+    url.search = params.get("search") ?? "";
+    navigate(`${url.pathname}${url.search}${url.hash}`, { replace: true });
   }
 }
 
