@@ -13,14 +13,7 @@ export interface AuthenticatedComponentRendererProps {
   setApiKey: (data: ApiKey | null) => void
 }
 
-
-function AuthenticatedComponentRenderer({
-  branding,
-  component: AuthenticatedComponent,
-  apiKey,
-  authServerUrl,
-  setApiKey,
-}: AuthenticatedComponentRendererProps) {
+function AuthenticatedComponentRenderer({ branding, component: AuthenticatedComponent, apiKey, authServerUrl, setApiKey, }: AuthenticatedComponentRendererProps) {
   const navigate = useNavigate();
   const isAuthenticated = apiKey !== null &&
     apiKey.creationTime + apiKey.duration > Date.now() &&
@@ -49,6 +42,7 @@ function AuthenticatedComponentRenderer({
     url.search = params.get("search") ?? "";
     navigate(`${url.pathname}${url.search}${url.hash}`, { replace: true });
   }
+  return null;
 }
 
 export default AuthenticatedComponentRenderer;
