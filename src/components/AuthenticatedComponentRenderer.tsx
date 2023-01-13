@@ -33,10 +33,9 @@ function AuthenticatedComponentRenderer({ branding, component: AuthenticatedComp
     url.searchParams.append('src', window.location.href);
     window.location.replace(url);
   } else {
-    // if not null then we set api key and set search and hash
+    // if not null then we set api key and restore parameters
     setApiKey(JSON.parse(apiKeyJson));
-    window.location.search = params.get("search") ?? "";
-    window.location.hash = params.get("hash") ?? "";
+    window.history.replaceState(null, '', params.get("src")!);
   }
   return null;
 }
