@@ -3,7 +3,6 @@ import { Card, Button } from "react-bootstrap";
 import { ApiKey, Email } from "@innexgo/frontend-auth-api";
 import AuthenticatedComponentProps from '../components/AuthenticatedComponentProps';
 import { Branding } from '@innexgo/common-react-components';
-import { useNavigate } from "react-router-dom";
 
 export interface AuthenticatedComponentRendererProps {
   branding: Branding,
@@ -14,7 +13,6 @@ export interface AuthenticatedComponentRendererProps {
 }
 
 function AuthenticatedComponentRenderer({ branding, component: AuthenticatedComponent, apiKey, authServerUrl, setApiKey, }: AuthenticatedComponentRendererProps) {
-  const navigate = useNavigate();
   const isAuthenticated = apiKey !== null &&
     apiKey.creationTime + apiKey.duration > Date.now() &&
     apiKey.apiKeyKind === "VALID";
@@ -35,12 +33,10 @@ function AuthenticatedComponentRenderer({ branding, component: AuthenticatedComp
     url.searchParams.append('src', window.location.href);
     window.location.replace(url);
   } else {
-    // if not null then we set api key and navigate to target
+    // if not null then we set api key and set search and hash
     setApiKey(JSON.parse(apiKeyJson));
-    const url = new URL(window.location.pathname, window.location.origin);
-    url.hash = params.get("hash") ?? "";
-    url.search = params.get("search") ?? "";
-    navigate(`${url.pathname}${url.search}${url.hash}`, { replace: true });
+    window.location.search = params.get("search") ?? "";
+    window.location.hash = params.get("hash") ?? "";
   }
   return null;
 }
