@@ -74,11 +74,14 @@ const SidebarEntry: React.FunctionComponent<SidebarEntryProps> = props => {
 }
 
 const loadUserData = async (props: AsyncProps<UserData>) => {
-  const userData = await userDataView({
-    creatorUserId: [props.apiKey.creatorUserId],
-    onlyRecent: true,
-    apiKey: props.apiKey.key,
-  })
+  const userData = await userDataView(
+    {
+      creatorUserId: [props.apiKey.creatorUserId],
+      onlyRecent: true,
+      apiKey: props.apiKey.key,
+    },
+    props.authServerUrl
+  )
     .then(unwrap);
 
   return userData[0];
@@ -95,6 +98,7 @@ interface InnerLayoutComposition {
 
 interface InnerLayoutProps {
   apiKey: ApiKey
+  authServerUrl: string,
   logoutCallback: () => void
 }
 
@@ -150,7 +154,7 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
             />
           </div>
           <div className="nav-item nav-link link-light my-3">
-            <Async promiseFn={loadUserData} apiKey={props.apiKey}>
+            <Async promiseFn={loadUserData} apiKey={props.apiKey} authServerUrl={props.authServerUrl}>
               <Async.Pending>
                 {preferences.collapsed
                   ? false
