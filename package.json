@@ -1,6 +1,6 @@
 {
   "name": "@innexgo/auth-react-components",
-  "version": "0.1.57",
+  "version": "0.1.58",
   "description": "UI templates for authenticated views",
   "main": "lib/index.js",
   "files": [
@@ -22,7 +22,7 @@
   "homepage": "https://github.com/innexgo/auth-react-components#readme",
   "peerDependencies": {
     "@innexgo/common-react-components": "^0.1.21",
-    "@innexgo/frontend-auth-api": "^0.2.49",
+    "@innexgo/frontend-auth-api": "^0.2.50",
     "@innexgo/frontend-common": "^0.0.17",
     "@popperjs/core": "^2.11.6",
     "@types/react-dom": "^18.0.10",
