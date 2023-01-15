@@ -12,12 +12,12 @@ export interface AuthenticatedComponentRendererProps {
   component: React.ComponentType<AuthenticatedComponentProps>
   apiKey: ApiKey | null,
   setApiKey: (data: ApiKey | null) => void,
-  authServerUrlFn: () => Promise<string>,
+  authAuthenticatorHrefFn: () => Promise<string>,
 }
 
 interface NotAuthenticatedHandlerProps {
   setApiKey: (data: ApiKey | null) => void,
-  authServerUrl: string,
+  authAuthenticatorHref: string,
 }
 
 class NotAuthenticatedHandler extends React.Component<NotAuthenticatedHandlerProps> {
@@ -34,7 +34,7 @@ class NotAuthenticatedHandler extends React.Component<NotAuthenticatedHandlerPro
       const apiKeyJson = searchParams.get('apiKey');
       if (apiKeyJson === null) {
         // if null we need to redirect to the auth site to login
-        let url = new URL('/login', this.props.authServerUrl);
+        let url = new URL(this.props.authAuthenticatorHref);
         url.searchParams.append('src', window.location.href);
         window.location.replace(url);
       } else {
@@ -59,7 +59,7 @@ function AuthenticatedComponentRenderer(props: AuthenticatedComponentRendererPro
   if (isAuthenticated) {
     return <props.component apiKey={props.apiKey!} setApiKey={props.setApiKey} branding={props.branding} />
   } else {
-    return <Async promiseFn={props.authServerUrlFn}>
+    return <Async promiseFn={props.authAuthenticatorHrefFn}>
       <Async.Pending>
         <WaitingPage>
           <Spinner animation="border" role="status">
@@ -73,7 +73,7 @@ function AuthenticatedComponentRenderer(props: AuthenticatedComponentRendererPro
         </WaitingPage>
       }</Async.Rejected>
       <Async.Fulfilled<string>>{data =>
-        <NotAuthenticatedHandler setApiKey={props.setApiKey} authServerUrl={data} />
+        <NotAuthenticatedHandler setApiKey={props.setApiKey} authAuthenticatorHref={data} />
       }</Async.Fulfilled>
     </Async>
   }

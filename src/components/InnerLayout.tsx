@@ -80,7 +80,7 @@ const loadUserData = async (props: AsyncProps<UserData>) => {
       onlyRecent: true,
       apiKey: props.apiKey.key,
     },
-    props.authServerApiUrl
+    props.authPubApiHref
   )
     .then(unwrap);
 
@@ -98,7 +98,7 @@ interface InnerLayoutComposition {
 
 interface InnerLayoutProps {
   apiKey: ApiKey
-  authServerApiUrl: string,
+  authPubApiHref: string,
   logoutCallback: () => void
 }
 
@@ -154,7 +154,7 @@ const InnerLayout: React.FunctionComponent<React.PropsWithChildren<InnerLayoutPr
             />
           </div>
           <div className="nav-item nav-link link-light my-3">
-            <Async promiseFn={loadUserData} apiKey={props.apiKey} authServerApiUrl={props.authServerApiUrl}>
+            <Async promiseFn={loadUserData} apiKey={props.apiKey} authPubApiHref={props.authPubApiHref}>
               <Async.Pending>
                 {preferences.collapsed
                   ? false
